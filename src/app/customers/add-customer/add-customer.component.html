@@ -4,7 +4,7 @@
       <form #empForm="ngForm" (ngSubmit)="RegisterEmp()">
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">Student Registration</h3>
+            <!-- <h3 class="panel-title">Student Registration</h3> -->
           </div>
           <div class="panel-body">
             <div class="form-group">
@@ -13,9 +13,12 @@
                 id="firstName"
                 type="text"
                 class="form-control"
+                required
                 name="firstName"
+                #firstName = "ngModel"
                 [(ngModel)]="emp.firstName"
               />
+              <small class="text-danger" *ngIf="firstName.touched && firstName?.errors?.required">First name is required</small>
             </div>
             <div class="form-group">
               <label for="lastName">Last Name</label>
@@ -24,8 +27,11 @@
                 type="text"
                 class="form-control"
                 name="lastName"
+                required
+                #lastName = "ngModel"
                 [(ngModel)]="emp.lastName"
               />
+              <small class="text-danger" *ngIf="lastName.touched && lastName?.errors?.required">Last name is required</small>
             </div>
             <div class="form-group">
               <label for="email">Email</label>
@@ -33,10 +39,33 @@
                 id="email"
                 type="text"
                 name="email"
+                email
+                required
+                #email="ngModel"
                 class="form-control"
                 [(ngModel)]="emp.email"
               />
+              <small class="text-danger" *ngIf="email.touched && email?.errors?.required">Email is required</small>
+
+              <small class="text-danger" *ngIf="email.touched && !email?.errors?.required && email?.errors?.email">Email is invalid</small>
+             
             </div>
+
+            <div class="form-group">
+              <label for="state">State</label>
+              <select class="form-control" required name="state" [(ngModel)]="emp.state" #state="ngModel">
+                <option [ngValue] = "null" >Select State</option>
+                <option *ngFor="let state of states" [ngValue]="state.id">
+                    {{state.name}}
+                </option>
+              </select>
+              {{ emp.state }}
+
+              <small class="text-danger" *ngIf="state.touched && state?.errors?.required">State is required</small>
+              
+            </div>
+
+
             <div class="form-group">
               <label>Gender</label>
               <div class="form-control">
@@ -45,7 +74,9 @@
                     type="radio"
                     name="gender"
                     value="male"
+                    required
                     [(ngModel)]="emp.gender"
+                    #gender = "ngModel"
                   />
                   Male
                 </label>
@@ -54,13 +85,19 @@
                     type="radio"
                     name="gender"
                     value="female"
+                    required
                     [(ngModel)]="emp.gender"
+                    #gender = "ngModel"
                   />
                   Female
                 </label>
+                
+                <small class="text-danger" style="display: block;" *ngIf="gender.touched && gender?.errors?.required">Gender is required</small>
               </div>
             </div>
 
+            
+ 
             <div class="form-group">
               <label>Gender</label>
               <div class="form-control">
@@ -75,10 +112,13 @@
                     id="chk{{ country.id }}"
                     name="countries{{ country.id }}"
                     [value]="country.id"
+                    
                     [(ngModel)]="countries[i].checked"
                   />
                   {{ country.name }}
                 </label>
+
+                <small class="text-danger" *ngIf="countryError"> Select atleast one country</small>
               </div>
             </div>
           </div>
