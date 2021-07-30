@@ -1,0 +1,6 @@
+.has-error {
+  border: solid 1px red;
+}
+.group-has-error input {
+  border: solid 1px red;
+}

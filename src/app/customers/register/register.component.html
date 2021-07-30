@@ -1,0 +1,175 @@
+<div class="container">
+  <div class="row">
+    <div class="form-bg">
+      <form #empForm="ngForm" (ngSubmit)="RegisterEmp()">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Registration</h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input
+                id="firstName"
+                type="text"
+                class="form-control"
+                required
+                name="firstName"
+                #firstName="ngModel"
+                [(ngModel)]="emp.firstName"
+              />
+              <small
+                class="text-danger"
+                *ngIf="firstName.touched && firstName?.errors?.required"
+                >First name is required</small
+              >
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input
+                id="lastName"
+                type="text"
+                class="form-control"
+                name="lastName"
+                required
+                #lastName="ngModel"
+                [(ngModel)]="emp.lastName"
+              />
+              <small
+                class="text-danger"
+                *ngIf="lastName.touched && lastName?.errors?.required"
+                >Last name is required</small
+              >
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                id="email"
+                type="text"
+                name="email"
+                email
+                required
+                #email="ngModel"
+                class="form-control"
+                [(ngModel)]="emp.email"
+              />
+              <small
+                class="text-danger"
+                *ngIf="email.touched && email?.errors?.required"
+                >Email is required</small
+              >
+
+              <small
+                class="text-danger"
+                *ngIf="
+                  email.touched &&
+                  !email?.errors?.required &&
+                  email?.errors?.email
+                "
+                >Email is invalid</small
+              >
+            </div>
+
+            <div
+              ngModelGroup
+              #passworGroup="ngModelGroup"
+              [class.group-has-error]="
+                confirmPassword.touched &&
+                confirmPassword.invalid &&
+                !confirmPassword?.errors.required
+              "
+            >
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  id="password"
+                  type="password"
+                  class="form-control"
+                  name="password"
+                  required
+                  #password="ngModel"
+                  [(ngModel)]="emp.password"
+                  (input)="confirmPassword.control.updateValueAndValidity()"
+                />
+                <small
+                  class="text-danger"
+                  *ngIf="password.touched && password?.errors?.required"
+                  >Password is required</small
+                >
+              </div>
+              <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input
+                  id="confirmPassword"
+                  appConfirmEqualValidator="password"
+                  type="password"
+                  class="form-control"
+                  name="confirmPassword"
+                  required
+                  #confirmPassword="ngModel"
+                  [(ngModel)]="emp.confirmPassword"
+                />
+                <small
+                  class="text-danger"
+                  *ngIf="
+                    confirmPassword.touched && confirmPassword?.errors?.required
+                  "
+                  >Confirm password is required</small
+                >
+
+                <small
+                  class="text-danger"
+                  *ngIf="
+                    confirmPassword.touched &&
+                    confirmPassword?.errors?.notEqual &&
+                    !confirmPassword?.errors?.required
+                  "
+                  >Password Mismatch</small
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="city">City</label>
+              <input
+                id="city"
+                type="text"
+                class="form-control"
+                name="city"
+                required
+                #city="ngModel"
+                [(ngModel)]="emp.address.city"
+              />
+              <small
+                class="text-danger"
+                *ngIf="city.touched && city?.errors?.required"
+                >City is required</small
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="state">State</label>
+              <input
+                id="state"
+                type="text"
+                class="form-control"
+                name="state"
+                required
+                #state="ngModel"
+                [(ngModel)]="emp.address.state"
+              />
+              <small
+                class="text-danger"
+                *ngIf="state.touched && state?.errors?.required"
+                >State is required</small
+              >
+            </div>
+          </div>
+          <div class="panel-footer">
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
