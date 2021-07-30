@@ -4,10 +4,11 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from "@angular/forms";
+import { SelectRequiredValidatorDirective } from "./select-validator.directive";
 
 @NgModule({
   imports: [FormsModule, ReactiveFormsModule, CommonModule],
-  declarations: [],
-  exports: [ FormsModule, ReactiveFormsModule, CommonModule],
+  declarations: [SelectRequiredValidatorDirective],
+  exports: [ FormsModule, ReactiveFormsModule, CommonModule,SelectRequiredValidatorDirective],
 })
 export class SharedModule {}

@@ -53,7 +53,7 @@
 
             <div class="form-group">
               <label for="state">State</label>
-              <select class="form-control" required name="state" [(ngModel)]="emp.state" #state="ngModel">
+              <select class="form-control"  name="state" [(ngModel)]="emp.state" #state="ngModel" appSelectValidator>
                 <option [ngValue] = "null" >Select State</option>
                 <option *ngFor="let state of states" [ngValue]="state.id">
                     {{state.name}}
@@ -61,7 +61,7 @@
               </select>
               {{ emp.state }}
 
-              <small class="text-danger" *ngIf="state.touched && state?.errors?.required">State is required</small>
+              <small class="text-danger" *ngIf="state.touched && state?.errors?.selectError">State is required</small>
               
             </div>
 
