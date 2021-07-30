@@ -32,15 +32,4 @@ export class RegisterComponent implements OnInit {
       console.log(this.emp);
     }
   }
-
-  // markAllTouched(form: NgForm) {
-  //   for (const key in form.controls) {
-  //     if (
-  //       form.controls.hasOwnProperty(key) &&
-  //       form.controls[key].hasOwnProperty("touched")
-  //     ) {
-  //       (form.controls[key] as any).touched = true;
-  //     }
-  //   }
-  // }
 }
