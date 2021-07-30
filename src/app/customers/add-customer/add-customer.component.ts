@@ -12,13 +12,15 @@ export class AddCustomerComponent implements OnInit {
   @ViewChild("empForm") empForm: NgForm;
 
   emp = {
-    firstName: null,
-    lastName: null,
-    email: null,
-    gender: null,
+    firstName: "",
+    lastName: "",
+    email: "",
+    gender: "",
     countries: [1,2],
-    state:null
+    state:""
   };
+
+  cloneEmp = {};
 
   countryError = false;
   countries = [
@@ -38,6 +40,11 @@ export class AddCustomerComponent implements OnInit {
 
   ngOnInit() {
     //IN case of EDIT
+    this.setUpCountries();
+    this.cloneEmp = JSON.parse(JSON.stringify(this.emp));
+  }
+
+  setUpCountries(){
     this.countries = this.countries.map((x) => {
       if (this.emp.countries.indexOf(x.id) !== -1) {
         x.checked = true;
@@ -50,7 +57,7 @@ export class AddCustomerComponent implements OnInit {
     if (e.target.checked) {
       this.emp.countries.push(+e.target.value);
     } else {
-      const index = this.emp.countries.findIndex((x) => x === +e.target.value);
+      const index = this.emp.countries.findIndex((x) => +x === +e.target.value);
       if (index !== -1) {
         this.emp.countries.splice(index, 1);
       }
@@ -58,22 +65,34 @@ export class AddCustomerComponent implements OnInit {
   }
 
   RegisterEmp() {
-    this.markAllTouched(this.empForm);
+    this.markAllTouched(this.empForm,true);
     if(this.empForm.valid){
       console.log(this.emp);
     }
   }
   
   
-  markAllTouched(form:NgForm){
+  markAllTouched(form:NgForm,status:boolean){
     for (const key in form.controls) {
       if (form.controls.hasOwnProperty(key) && form.controls[key].hasOwnProperty('touched')) {
-         (form.controls[key] as any).touched  = true;
+         (form.controls[key] as any).touched  = status;
       }
     }
     this.countryError = false
     if(this.emp.countries.length==0){
-      this.countryError = true;
+      this.countryError = status;
     }
+  }
+
+  disableButton(){
+    console.log(this.emp);
+    console.log(this.cloneEmp);
+    return JSON.stringify(this.emp) == JSON.stringify(this.cloneEmp);
+  }
+
+  resetForm(){
+   this.emp = JSON.parse(JSON.stringify(this.cloneEmp));
+   this.markAllTouched(this.empForm,false);
+   this.setUpCountries();
   }
 }
