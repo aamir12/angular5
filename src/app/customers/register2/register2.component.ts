@@ -1,5 +1,15 @@
-import { Component, OnChanges, SimpleChanges, ViewChild } from "@angular/core";
+import {
+  AfterViewInit,
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { pairwise } from "rxjs/operator/pairwise";
+import { startWith } from "rxjs/operator/startWith";
 import { markAllTouched } from "../../form/utility/formFunctions";
 
 @Component({
@@ -7,13 +17,38 @@ import { markAllTouched } from "../../form/utility/formFunctions";
   templateUrl: "./register2.component.html",
   styleUrls: ["./register2.component.css"],
 })
-export class Register2Component {
+export class Register2Component implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild("empForm") empForm: NgForm;
+  formSub: any;
   emp = {
     name: null,
     password: null,
     confirmPassword: null,
   };
+
+  ngAfterViewInit() {
+    this.formSub = this.empForm.valueChanges.subscribe((values: any) => {
+      if (values.name && !!values.name) {
+        console.log(`Name change`);
+        //console.log(this.empForm.control.value);
+        console.log(values.name);
+      }
+    });
+  }
+
+  ngOnInit() {
+    // this.formSub = this.empForm.valueChanges.subscribe((values: any) => {
+    //   console.log(values);
+    //   // console.log("Value Change");
+    //   // if (values.name) {
+    //   //   console.log(this.empForm.control.get("name"));
+    //   //   console.log(values.name);
+    //   // }
+    // });
+    // this.empForm.statusChanges.subscribe(() => {
+    //   console.log("Is form dirty yet: " + this.form.dirty);
+    // });
+  }
 
   RegisterEmp() {
     markAllTouched(this.empForm);
@@ -32,4 +67,8 @@ export class Register2Component {
   //   );
   //   console.log("Current : " + currentEmployee.name);
   // }
+
+  ngOnDestroy() {
+    this.formSub.unsubscribe();
+  }
 }
