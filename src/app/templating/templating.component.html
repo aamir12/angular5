@@ -1,0 +1,20 @@
+<button type="button" (click)="toggle = !toggle">
+  {{ toggle ? "Hide" : "Show" }}
+</button>
+<p *ngIf="toggle">templating works!</p>
+<ng-template *ngIf="toggle">Hello world</ng-template>
+<ng-container>
+  Show inside the container
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <button class="btn btn-primary" (click)="start()">Start</button>
+        <button class="btn btn-danger" (click)="stop()">Stop</button>
+      </div>
+      <div class="col-12">
+        {{ timer }}
+      </div>
+    </div>
+  </div>
+</ng-container>

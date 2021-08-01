@@ -1,3 +1,8 @@
 export const environment = {
-  production: true
+  production: true,
+  url: "http://localhost/phprestapi/fileapi.php",
+  url1: "http://localhost/phprestapi/api.php",
+  upload: "http://localhost/phprestapi/uploads/",
+  paypalAPI:
+    "AWPLmlX4098iRNwNI0pkWjmKpNOoFiGHSjqFPu9gbyWhfqjzuNxt5vknwFxzjPfrN9TSkEhqnf214aMz",
 };
