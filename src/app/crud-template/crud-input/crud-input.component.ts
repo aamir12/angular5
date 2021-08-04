@@ -19,12 +19,17 @@ export class CrudInputComponent implements OnInit {
     lname: "",
     email: "",
     mobile: "",
+    image: null,
+    selectedImage: null,
   };
-
+  imgError: string = null;
   cloneEmp = {};
+  defaultImgPath = "assets/img/user.png";
+  imgPath = "assets/img/user.png";
   selectedEmpIndex = -1;
   submitClick = false;
   loader = false;
+  selectedImage = null;
   ngOnInit() {
     this.selectedEmpIndex = this.cs.selectedEmpIndex;
     if (this.selectedEmpIndex == -1) {
@@ -45,8 +50,12 @@ export class CrudInputComponent implements OnInit {
   onSubmit() {
     this.markAllTouched(this.empForm, true);
     console.log(this.empForm.value);
-    // return;
+    console.log(this.emp);
     console.log(this.empForm.valid);
+    let check = true;
+    if (check) {
+      return;
+    }
 
     if (this.empForm.valid) {
       this.submitClick = true;
@@ -102,5 +111,36 @@ export class CrudInputComponent implements OnInit {
   resetForm() {
     this.emp = JSON.parse(JSON.stringify(this.cloneEmp));
     this.markAllTouched(this.empForm, false);
+  }
+
+  onSelectedFile(event: any) {
+    if (event.target.files.length === 0) {
+      this.imgPath = this.defaultImgPath;
+      this.empForm.controls["image"].setValue(null);
+      return;
+    }
+    const file = event.target.files[0];
+    if (file.type.match(/image\/*/) == null) {
+      this.imgError = "Only images are supported.";
+      this.imgPath = this.defaultImgPath;
+      this.empForm.controls["image"].setValue(null);
+      return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = (event: any) => {
+      this.imgPath = event.target.result;
+      //this.empForm.controls["image"].setValue(file);
+      //error: this.empForm.get("image").setValue(file);
+      //error: this.empForm.patchValue({
+      //   image: file,
+      // });
+      //this.emp.image = file;
+      //base64Img
+      //this.empForm.controls["image"].setValue(this.imgPath);
+      this.emp.selectedImage = file;
+      this.imgError = null;
+    };
+    reader.readAsDataURL(file);
   }
 }
