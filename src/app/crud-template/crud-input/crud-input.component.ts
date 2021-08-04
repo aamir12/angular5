@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { NgForm } from "@angular/forms";
+import { FormControl, NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { CrudService } from "../crud.service";
+import { markAllTouched } from "../../form/utility/formFunctions";
 
 @Component({
   selector: "app-crud-input",
@@ -20,86 +21,79 @@ export class CrudInputComponent implements OnInit {
     email: "",
     mobile: "",
     image: null,
-    selectedImage: null,
   };
-  imgError: string = null;
+
   cloneEmp = {};
   defaultImgPath = "assets/img/user.png";
   imgPath = "assets/img/user.png";
   selectedEmpIndex = -1;
   submitClick = false;
   loader = false;
-  selectedImage = null;
+
   ngOnInit() {
     this.selectedEmpIndex = this.cs.selectedEmpIndex;
     if (this.selectedEmpIndex == -1) {
       //add
     } else {
       //edit
+      this.loader = true;
       this.cs.getEmp(this.selectedEmpIndex).subscribe((res) => {
-        console.log(res.data);
         this.emp["email"] = res.data["email"];
         this.emp["fname"] = res.data["fname"];
         this.emp["lname"] = res.data["lname"];
         this.emp["mobile"] = res.data["mobile"];
+        this.emp["image"] =
+          "https://www.pngitem.com/pimgs/m/185-1850038_download-sample-png-file-download-sample-jpg-file.png";
+        this.imgPath = this.emp["image"];
+        this.loader = false;
       });
     }
     this.cloneEmp = JSON.parse(JSON.stringify(this.emp));
   }
 
   onSubmit() {
-    this.markAllTouched(this.empForm, true);
-    console.log(this.empForm.value);
-    console.log(this.emp);
-    console.log(this.empForm.valid);
-    let check = true;
+    this.submitClick = true;
+    markAllTouched(this.empForm, true);
+    // console.log(this.emp);
+    //let check = true;
+    let check = false;
     if (check) {
       return;
     }
 
-    if (this.empForm.valid) {
-      this.submitClick = true;
-      const data = this.empForm.value;
-      console.log(this.empForm.value);
-      //return false;
-      let obs: Observable<any> = null;
-      if (this.selectedEmpIndex != -1) {
-        //edit
-        data["action"] = "editEmployee";
-        data["id"] = this.selectedEmpIndex;
-        obs = this.cs.edit(data);
-      } else {
-        //add
-        data["action"] = "addEmployee";
-        obs = this.cs.add(data);
-      }
-      obs.subscribe(
-        (res) => {
-          console.log("Success");
-          console.log(res);
-          this.router.navigate(["/employees"]);
-          this.submitClick = false;
-        },
-        (error) => {
-          console.log("Error");
-          console.log(error);
-          this.router.navigate(["/employees"]);
-          this.submitClick = false;
-        }
-      );
+    if (!this.empForm.valid) {
+      return;
     }
-  }
 
-  markAllTouched(form: any, status: boolean) {
-    console.log(form.controls);
-    for (const key in form.controls) {
-      if (
-        form.controls.hasOwnProperty(key) &&
-        form.controls[key].hasOwnProperty("touched")
-      ) {
-        (form.controls[key] as any).touched = status;
-      }
+    const data = this.emp;
+    delete data.image;
+    let obs: Observable<any> = null;
+    if (this.selectedEmpIndex != -1) {
+      //edit
+      data["action"] = "editEmployee";
+      data["id"] = this.selectedEmpIndex;
+      obs = this.cs.edit(data);
+    } else {
+      //add
+      data["action"] = "addEmployee";
+      obs = this.cs.add(data);
     }
+
+    this.loader = true;
+    obs.subscribe(
+      (res) => {
+        console.log("Success");
+        console.log(res);
+        this.router.navigate(["/employees"]);
+        this.loader = false;
+      },
+      (error) => {
+        console.log("Error");
+        console.log(error);
+        this.router.navigate(["/employees"]);
+        this.loader = false;
+      }
+    );
   }
 
   disableButton() {
@@ -110,36 +104,31 @@ export class CrudInputComponent implements OnInit {
 
   resetForm() {
     this.emp = JSON.parse(JSON.stringify(this.cloneEmp));
-    this.markAllTouched(this.empForm, false);
+    markAllTouched(this.empForm, false);
   }
 
   onSelectedFile(event: any) {
     if (event.target.files.length === 0) {
       this.imgPath = this.defaultImgPath;
-      this.empForm.controls["image"].setValue(null);
+      this.emp.image = null;
+      (this.empForm.controls["image"] as any).touched = true;
+      console.log("No File select");
       return;
     }
     const file = event.target.files[0];
     if (file.type.match(/image\/*/) == null) {
-      this.imgError = "Only images are supported.";
       this.imgPath = this.defaultImgPath;
-      this.empForm.controls["image"].setValue(null);
+      this.emp.image = null;
+      (this.empForm.controls["image"] as any).touched = true;
+      console.log("NON image file");
       return;
     }
 
     var reader = new FileReader();
     reader.onload = (event: any) => {
       this.imgPath = event.target.result;
-      //this.empForm.controls["image"].setValue(file);
-      //error: this.empForm.get("image").setValue(file);
-      //error: this.empForm.patchValue({
-      //   image: file,
-      // });
-      //this.emp.image = file;
-      //base64Img
-      //this.empForm.controls["image"].setValue(this.imgPath);
-      this.emp.selectedImage = file;
-      this.imgError = null;
+      this.emp.image = this.imgPath;
+      console.log("Valid Image");
     };
     reader.readAsDataURL(file);
   }

@@ -51,7 +51,7 @@ export class Register2Component implements OnInit, OnDestroy, AfterViewInit {
   }
 
   RegisterEmp() {
-    markAllTouched(this.empForm);
+    markAllTouched(this.empForm, true);
     if (this.empForm.valid) {
       console.log(this.emp);
     }

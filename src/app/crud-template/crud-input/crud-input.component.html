@@ -1,16 +1,16 @@
 <form #empForm="ngForm" (ngSubmit)="onSubmit()">
   <div class="d-flex my-2 flex-row justify-content-between flex-wrap">
-    <h2>{{ selectedEmpIndex != -1 ? "Edit" : "Add" }} Employee</h2>
+    <h4>{{ selectedEmpIndex != -1 ? "Edit" : "Add" }} Employee</h4>
     <div>
       <button
         type="submit"
         class="btn btn-success btn-sm mr-2"
-        [disabled]="submitClick || loader"
+        [disabled]="loader"
       >
-        <i class="fas fa-save" *ngIf="!submitClick"></i>
+        <i class="fas fa-save" *ngIf="loader"></i>
         <span
           class="spinner-border spinner-border-sm"
-          *ngIf="submitClick"
+          *ngIf="loader"
         ></span>
 
         Save
@@ -123,18 +123,17 @@
             />
             <input
               type="file"
-              name="image"
+              name="file"
               class="file-btn mx-auto"
-              #image="ngModel"
-              required
-              [(ngModel)]="emp.image"
+              accept=".png,.jpg"
               (change)="onSelectedFile($event)"
             />
+            <input type="hidden" name="image" [(ngModel)]="emp.image" #image="ngModel" required>
             <div
-              class="inp-err mt-0 f-12"
-              *ngIf="image.touched && image.invalid"
+              class="text-danger"
+              *ngIf="(image.touched && image.invalid) || (image.invalid && submitClick)"
             >
-              Select only image
+             select valid image: .png,.jpg
             </div>
           </div>
         </div>
