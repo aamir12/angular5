@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { DatepickerComponent } from "./datepicker/datepicker.component";
 import { TemplatingComponent } from "./templating/templating.component";
 
 const routes: Routes = [
@@ -23,6 +24,10 @@ const routes: Routes = [
     path: "",
     redirectTo: "",
     pathMatch: "full",
+  },
+  {
+    path: "datepicker",
+    component: DatepickerComponent,
   },
 ];
 

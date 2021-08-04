@@ -1,0 +1,14 @@
+<div class="container">
+  <form #myForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-md-6">
+          <my-date-picker name="mydate" [options]="myDatePickerOptions"
+                          [(ngModel)]="model" required></my-date-picker>
+      </div>
+      </div>
+      <button class="btn btn-primary" >Submit</button>
+      {{ model | json }}
+  </form>
+</div>
+
+
