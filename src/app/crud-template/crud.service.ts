@@ -10,6 +10,15 @@ export class CrudService {
   url1: string = environment.url1;
   public empData = new Subject<any>();
   constructor(private http: HttpClient) {}
+  allEmployees: any[];
+  selectedEmpIndex = -1;
+
+  deleteFromEmp(id) {
+    const index = this.allEmployees.findIndex((x) => x.eid === id);
+    if (index !== -1) {
+      this.allEmployees.splice(index, 1);
+    }
+  }
   add(data) {
     return this.http.post<any>(`${this.url}`, data);
   }
@@ -20,23 +29,47 @@ export class CrudService {
     return this.http.post<any>(`${this.url}`, { action: "allEmployee" });
   }
 
-  allEmp() {
-    this.http.post<any>(`${this.url}`, { action: "allEmployee" }).subscribe(
-      (res) => {
-        this.empData.next({ status: true, data: res.data });
-      },
-      (error) => {
-        console.log(error);
-        this.empData.next({ status: false, error: error.message });
-      }
-    );
+  async allEmp() {
+    let result = {
+      error: null,
+      employees: [],
+    };
+    let isError = null;
+    let res = await this.http
+      .post<any>(`${this.url}`, { action: "allEmployee" })
+      .toPromise()
+      .catch((error) => {
+        isError = error;
+        result["error"] = "Server Error";
+      });
+
+    if (!isError && res) {
+      this.allEmployees = res.data;
+      result["employees"] = res.data;
+    }
+    console.log(result);
+    return result;
   }
 
-  delete(id) {
-    return this.http.post<any>(`${this.url}`, {
-      action: "deleteEmployee",
-      id: id,
-    });
+  async delete(id) {
+    let result = {
+      data: null,
+      error: null,
+    };
+    result["data"] = await this.http
+      .post<any>(`${this.url}`, {
+        action: "deleteEmployee",
+        id: id,
+      })
+      .toPromise()
+      .catch((error) => {
+        result["error"] = "Server Error";
+      });
+
+    if (result["data"]) {
+      this.deleteFromEmp(id);
+    }
+    return result;
   }
 
   getEmp(id) {

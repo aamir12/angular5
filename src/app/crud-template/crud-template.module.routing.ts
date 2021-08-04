@@ -11,7 +11,7 @@ const routes: Routes = [
     children: [
       { path: "", component: CrudListComponent },
       { path: "create", component: CrudInputComponent },
-      { path: ":id/edit", component: CrudInputComponent },
+      { path: "edit", component: CrudInputComponent },
     ],
   },
 ];

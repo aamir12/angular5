@@ -8,53 +8,34 @@ import { CrudService } from "../crud.service";
   templateUrl: "./crud-list.component.html",
   styleUrls: ["./crud-list.component.css"],
 })
-export class CrudListComponent implements OnInit, OnDestroy {
+export class CrudListComponent implements OnInit {
   constructor(private cs: CrudService, private router: Router) {}
   employees: any[] = [];
   loader: boolean = true;
-  empSub: Subscription;
   error: string = null;
-  ngOnInit() {
-    // this.cs.all().subscribe(
-    //   (res) => {
-    //     this.employees = res.data;
-    //     this.loader = false;
-    //   },
-    //   (error) => {
-    //     this.loader = false;
-    //   }
-    // );
-
-    this.cs.allEmp();
-    this.empSub = this.cs.empData.subscribe((res) => {
-      console.log(res);
-      this.loader = false;
-      if (res.status) {
-        this.employees = res.data;
-        this.error = null;
-      } else {
-        this.error = res.error;
-      }
-    });
+  async ngOnInit() {
+    let data = await this.cs.allEmp();
+    if (data.error) {
+      this.error = data.error;
+    } else {
+      this.employees = data.employees;
+    }
+    this.loader = false;
   }
 
-  delete(id) {
+  async delete(id) {
     if (confirm("Are you sure")) {
-      this.cs.delete(id).subscribe((res) => {
-        this.loader = true;
-        this.cs.allEmp();
-      });
+      this.loader = true;
+      let result = await this.cs.delete(id);
+      if (result["error"]) {
+      }
+      this.employees = this.cs.allEmployees;
+      this.loader = false;
     }
   }
 
-  ngOnDestroy() {
-    this.empSub.unsubscribe();
-  }
-
-  fetchEmp(id) {
-    this.cs.getEmp(id).subscribe((res) => {
-      console.log("IN LIST");
-      console.log(res);
-    });
+  navigate(id) {
+    this.cs.selectedEmpIndex = id;
+    this.router.navigate(["/employees/edit"]);
   }
 }

@@ -13,7 +13,7 @@
   "
 >
   <h2>Employee List</h2>
-  <a class="btn btn-primary btn-sm" [routerLink]="['/employees/create']">
+  <a class="btn btn-primary btn-sm" (click)="navigate(-1)">
     <i class="fas fa-user-plus"></i> New Employee
   </a>
 </div>
@@ -35,10 +35,7 @@
       <td>{{ emp.email }}</td>
       <td>{{ emp.mobile }}</td>
       <td>
-        <a
-          class="btn btn-sm btn-primary mr-2"
-          [routerLink]="['/employees', emp.eid, 'edit']"
-        >
+        <a class="btn btn-sm btn-primary mr-2" (click)="navigate(emp.eid)">
           <i class="fas fa-edit"></i>
         </a>
         <button class="btn btn-sm btn-danger" (click)="delete(emp.eid)">
@@ -53,5 +50,3 @@
 </table>
 
 <div class="spinner-border text-info" *ngIf="loader"></div>
-
-<button class="btn btn-primary" (click)="fetchEmp(29)">Fetch</button>
