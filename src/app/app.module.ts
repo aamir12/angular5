@@ -9,6 +9,7 @@ import { CrudService } from "./crud-template/crud.service";
 import { HttpClientModule } from "@angular/common/http";
 import { DatepickerComponent } from "./datepicker/datepicker.component";
 import { MyDatePickerModule } from "../../node_modules/angular4-datepicker/src/my-date-picker";
+import { Daterangepicker } from "ng2-daterangepicker";
 
 @NgModule({
   declarations: [AppComponent, TemplatingComponent, DatepickerComponent],
@@ -17,6 +18,7 @@ import { MyDatePickerModule } from "../../node_modules/angular4-datepicker/src/m
     SharedModule,
     HttpClientModule,
     MyDatePickerModule,
+    Daterangepicker,
     AppRoutingModule,
   ],
   providers: [CrudService],

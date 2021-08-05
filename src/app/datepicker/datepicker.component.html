@@ -2,13 +2,36 @@
   <form #myForm="ngForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <div class="col-md-6">
-          <my-date-picker name="mydate" [options]="myDatePickerOptions"
-                          [(ngModel)]="model" required></my-date-picker>
+        <my-date-picker
+          name="mydate"
+          [options]="myDatePickerOptions"
+          [(ngModel)]="model"
+          required
+        ></my-date-picker>
       </div>
-      </div>
-      <button class="btn btn-primary" >Submit</button>
+    </div>
+
+    <div class="col-md-6">
+      <input
+        type="text"
+        class="form-control"
+        name="daterangeInput"
+        daterangepicker
+        [options]="options"
+        (selected)="selectedDate($event, daterange)"
+        (applyDaterangepicker)="calendarApplay($event, daterange)"
+      />
+    </div>
+    <button class="btn btn-primary">Submit</button>
+    <div>
+      Angular4 datepicker:
+      <br />
       {{ model | json }}
+    </div>
+    <div>
+      ng2-daterangepicker:
+      <br />
+      {{ daterange | json }}
+    </div>
   </form>
 </div>
-
-
