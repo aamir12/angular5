@@ -15,10 +15,10 @@ export class AppComponent implements OnInit {
     // const test = moment(actual).isBetween(start, end);
     // console.log(test);
     //S2 UTC Format
-    //var date = moment("2016-10-19");
-    //console.log(date.isValid());
-    //console.log(date);
-    //console.log("UTC time:", moment.utc("2016-10-19").format());
+    // var date = moment("2016-10-19");
+    // console.log(date.isValid());
+    // console.log(date);
+    // console.log("UTC time:", moment.utc("2016-10-19").format());
     //S3 Compare Date Time
     // let d1 = "2021-05-01";
     // let d2 = "2021-05-10";
