@@ -1,5 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
+import { DatePipe } from "@angular/common";
 
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
@@ -21,7 +22,7 @@ import { Daterangepicker } from "ng2-daterangepicker";
     Daterangepicker,
     AppRoutingModule,
   ],
-  providers: [CrudService],
+  providers: [CrudService, DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

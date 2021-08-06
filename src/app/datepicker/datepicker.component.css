@@ -1,0 +1,15 @@
+.my-calender {
+  border: solid 1px #ccc;
+  padding: 5px 10px;
+  border-radius: 5px;
+  min-height: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgb(43, 141, 197);
+  font-size: 16px;
+}
+
+.my-calender span.dateSep {
+  margin: 0 3px;
+}
