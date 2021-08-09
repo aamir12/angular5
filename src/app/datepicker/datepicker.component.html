@@ -2,51 +2,74 @@
   <form #myForm="ngForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <div class="col-md-6">
+        From
         <my-date-picker
-          name="mydate"
+          name="from"
           [options]="myDatePickerOptions"
           [(ngModel)]="d1"
           required
+          (inputFieldChanged)="onInputFieldChanged($event)"
         ></my-date-picker>
       </div>
 
       <div class="col-md-6">
+        To
         <my-date-picker
-          name="mydate"
+          name="to"
           [options]="myDatePickerOptions"
           [(ngModel)]="d2"
           required
+          (inputFieldChanged)="onInputFieldChanged($event)"
         ></my-date-picker>
+      </div>
+      <div class="col-md-12">
+        <small class="text-danger" *ngIf="invalidDateRange"
+          >From date must be smaller than to date
+        </small>
       </div>
     </div>
 
-    <div class="col-md-6">
-      <div 
-         daterangepicker
+    <div class="row">
+      <div class="col-md-6">
+        <div
+          daterangepicker
           name="mydate"
           [options]="options"
-          (selected) = "selectedDate($event,daterange)"
+          (selected)="selectedDate($event, daterange)"
           class="my-calender"
         >
-        <div>
-          <span> {{daterange.start | date:shortDate}} </span>
-          <span *ngIf="daterange.end" class="dateSep"> - </span>
-          <span *ngIf="daterange.end"> {{daterange.end | date:shortDate}} </span>
+          <div>
+            <span> {{ daterange.start | date: shortDate }} </span>
+            <span *ngIf="daterange.end" class="dateSep"> - </span>
+            <span *ngIf="daterange.end">
+              {{ daterange.end | date: shortDate }}
+            </span>
+          </div>
+          <div>
+            <i class="fas fa-calendar-alt"></i>
+          </div>
         </div>
-        <div>
-          <i class="fas fa-calendar-alt"></i>
-        </div>
-        
       </div>
     </div>
-    <button class="btn btn-primary">Submit</button>
-    <div>
-      Angular4 datepicker:
-      <br />
-     Date1: {{ d1 | json }}
-      <br>
-     Date2 :  {{ d2 | json }}
+    <div class="row">
+      <div class="col-md-12">
+        <br />
+        <button class="btn btn-primary">Submit</button>
+        <div>
+          Angular4 datepicker:
+          <br />
+          Date1: {{ d1 | json }}
+          <br />
+          Date2 : {{ d2 | json }}
+        </div>
+        <div>
+          ng2 datepicker :
+          <br />
+          Date1: {{ d1 | json }}
+          <br />
+          Date2 : {{ d2 | json }}
+        </div>
+      </div>
     </div>
-   
   </form>
 </div>

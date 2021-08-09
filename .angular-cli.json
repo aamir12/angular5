@@ -19,7 +19,10 @@
         "../node_modules/ng2-daterangepicker/daterangepicker.component.css",
         "styles.css"
       ],
-      "scripts": ["../node_modules/jquery/dist/jquery.min.js"],
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/jspdf/dist/jspdf.min.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

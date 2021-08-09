@@ -28,8 +28,9 @@ export class AppComponent implements OnInit {
     // //var isafter = moment(d2).isAfter(d1);
     // console.log(isafter);
     //S4 Different Format
-    // let d1 = "05/08/2021";
-    // let d2 = "10/08/2021";
+    // let d1 = "05/08/2021"; //invalid date
+    // let d1 = moment("05/08/2021", "DD/MM/YYYY").format("YYYY-MM-DD");
+    // let d2 = moment("10/08/2021", "DD/MM/YYYY").format("YYYY-MM-DD");
     // console.log(moment(d2).isAfter(d1));
   }
 }
