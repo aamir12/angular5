@@ -13,6 +13,7 @@ import { Daterangepicker } from "ng2-daterangepicker";
 import { PdfComponent } from "./pdf/pdf.component";
 import { TemplatingComponent } from "./templating/templating.component";
 import { DatepickerComponent } from "./datepicker/datepicker.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -27,6 +28,8 @@ import { DatepickerComponent } from "./datepicker/datepicker.component";
     HttpClientModule,
     MyDatePickerModule,
     Daterangepicker,
+    ReactiveFormsModule,
+    FormsModule,
     AppRoutingModule,
   ],
   providers: [CrudService, DatePipe, CurrencyPipe],
