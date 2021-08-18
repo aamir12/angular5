@@ -1,8 +1,9 @@
 import { CurrencyPipe, DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
-//import * as jsPDF from "jspdf";
+import * as XLSX from "xlsx";
 import "jspdf-autotable";
 
+type AOA = any[][];
 declare var jsPDF: any;
 
 @Component({
@@ -444,6 +445,59 @@ export class PdfComponent implements OnInit {
       //only html export to pdf
       //doc.autoTable({ html: "#my-table" });
       //doc.save("table.pdf");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  downloadExl() {
+    try {
+      let fileName: string = "payment-history.xlsx";
+      let wopts: XLSX.WritingOptions = { bookType: "xlsx", type: "array" };
+
+      let exceldata: AOA = [
+        [
+          "Transaction Date",
+          "Description",
+          "Amount Paid",
+          "Escrow",
+          "Interest",
+        ],
+      ];
+      this.payments.forEach((element) => {
+        let temp = [];
+
+        temp.push(
+          this.datePipe.transform(element.effectivDate, "MMM dd, y") == null
+            ? ""
+            : this.datePipe.transform(element.effectivDate, "MMM dd, y")
+        );
+        temp.push(element.decription == null ? "" : element.decription);
+        temp.push(
+          this.currencyPipe.transform(element.amountPaid) == null
+            ? ""
+            : this.currencyPipe.transform(element.amountPaid)
+        );
+
+        temp.push(
+          this.currencyPipe.transform(element.escrow) == null
+            ? ""
+            : this.currencyPipe.transform(element.escrow)
+        );
+        temp.push(
+          this.currencyPipe.transform(element.interest) == null
+            ? ""
+            : this.currencyPipe.transform(element.interest)
+        );
+        // temp.push(this.currencyPipe.transform(element.principalBalance) == null ? '' : this.currencyPipe.transform(element.principalBalance));
+        exceldata.push(temp);
+      });
+      const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(exceldata);
+      /* generate workbook and add the worksheet */
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      /* save to file */
+      XLSX.writeFile(wb, fileName);
     } catch (error) {
       console.log(error);
     }
