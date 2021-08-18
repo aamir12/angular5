@@ -14,6 +14,7 @@ import { PdfComponent } from "./pdf/pdf.component";
 import { TemplatingComponent } from "./templating/templating.component";
 import { DatepickerComponent } from "./datepicker/datepicker.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { GitcommandComponent } from './gitcommand/gitcommand.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     TemplatingComponent,
     DatepickerComponent,
     PdfComponent,
+    GitcommandComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { DatepickerComponent } from "./datepicker/datepicker.component";
+import { GitcommandComponent } from "./gitcommand/gitcommand.component";
 import { PdfComponent } from "./pdf/pdf.component";
 import { TemplatingComponent } from "./templating/templating.component";
 
@@ -33,6 +34,10 @@ const routes: Routes = [
   {
     path: "pdf",
     component: PdfComponent,
+  },
+  {
+    path: "git",
+    component: GitcommandComponent,
   },
 ];
 
