@@ -1,6 +1,8 @@
 import { CurrencyPipe, DatePipe } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import * as XLSX from "xlsx";
+import { NgForm } from "@angular/forms";
+//import * as jsPDF from "jspdf";
 import "jspdf-autotable";
 
 type AOA = any[][];
@@ -525,6 +527,19 @@ export class PdfComponent implements OnInit {
       .replace(/\b[a-z]/g, function (letter) {
         return letter.toUpperCase();
       }));
+  }
+
+  @ViewChild("selectForm") selectForm: NgForm;
+  lUsers: any[] = [
+    { Name: "Billy Williams", id: "1" },
+    { Name: "Sally Ride", id: "2" },
+  ];
+  auth = {
+    user: null,
+  };
+
+  onSubmit() {
+    console.log(this.selectForm.valid);
   }
 
   base64Img =

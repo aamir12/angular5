@@ -1,0 +1,15 @@
+.red {
+  background: red !important;
+}
+
+.border {
+  border: solid 1px black;
+  padding: 5px;
+}
+
+.box {
+  width: 100px;
+  height: 100px;
+  background: yellow;
+  margin: 20px auto;
+}

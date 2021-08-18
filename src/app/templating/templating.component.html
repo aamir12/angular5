@@ -18,3 +18,20 @@
     </div>
   </div>
 </ng-container>
+
+<br />
+<br />
+<h3>Add and remove class using renderer</h3>
+<button type="button" class="btn btn-primary" (click)="addClass()">
+  Add Class
+</button>
+<button type="button" class="btn btn-danger" (click)="removeClass()">
+  Remove Class
+</button>
+
+<button type="button" class="btn btn-success" (click)="toggleClass()">
+  Toggle Class
+</button>
+
+<br />
+<div class="box" #box></div>
