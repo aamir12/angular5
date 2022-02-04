@@ -18,6 +18,7 @@ import { PdfComponent } from "./pdf/pdf.component";
 import { TemplatingComponent } from "./templating/templating.component";
 import { DatepickerComponent } from "./datepicker/datepicker.component";
 import { GitcommandComponent } from "./gitcommand/gitcommand.component";
+import { ModalPopupComponent } from './modal-popup/modal-popup.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { GitcommandComponent } from "./gitcommand/gitcommand.component";
     DatepickerComponent,
     PdfComponent,
     GitcommandComponent,
+    ModalPopupComponent,
   ],
   imports: [
     BrowserModule,

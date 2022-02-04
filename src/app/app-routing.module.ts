@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { DatepickerComponent } from "./datepicker/datepicker.component";
 import { GitcommandComponent } from "./gitcommand/gitcommand.component";
+import { ModalPopupComponent } from "./modal-popup/modal-popup.component";
 import { PdfComponent } from "./pdf/pdf.component";
 import { TemplatingComponent } from "./templating/templating.component";
 
@@ -38,6 +39,12 @@ const routes: Routes = [
   {
     path: "git",
     component: GitcommandComponent,
+  },
+  {
+    path: "modal",
+    component: ModalPopupComponent,
+    outlet: "modal",
+    children: [{}],
   },
 ];
 
